@@ -1,6 +1,7 @@
 
 package com.dev.utils;
 
+import com.dev.objects.Messages;
 import com.dev.objects.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -62,6 +63,14 @@ public class Persist {
         session.close();
         return user;
 
+    }
+
+    public List<Messages> getMessagesByToken(String token){
+        Session session = sessionFactory.openSession();
+        List<Messages> messages = session.createQuery("FROM Messages WHERE recipient.token=:token")
+                .setParameter("token",token).list();
+        session.close();
+        return messages;
     }
 
 
